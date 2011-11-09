@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<seasonPattern>
+		<![CDATA[
+		<div class="new-episodes panel panel-full-width">[\s]+?<div class="panel-title">Сезон ([0-9]+?)</div>
+		]]>
+	</seasonPattern>
+	<episodePattern>
+		<![CDATA[
+		<div class="thumb">[\s]+?<a href="(.+?)">[\S\W]+?<div class="grey">([\d]+?) серия</div>
+		]]>
+	</episodePattern>
+</settings>
