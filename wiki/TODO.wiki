@@ -2,15 +2,16 @@
 
 = Project =
 
-* add script that allow use downloader in this way
+ * add script that allow use downloader in this way
 {{{
 namba-serials-downloader -l http://serials.namba.kg/serial.php?id=70
 }}}
-* refactor code. Add try...extend constructions.
-* add --directory argument which show whuch directory use to save episodes
-* add ability to automatic video converting with ffmpeg
+
+ * refactor code. Add try...extend constructions.
+ * add --directory argument which show whuch directory use to save episodes
+ * add ability to automatic video converting with ffmpeg
 
 
 
 = Wiki =
-* add notes about new abilities
+ * add notes about new abilities
