@@ -5,6 +5,7 @@ import os
 import sys
 from parser import *
 from web import *
+import json
 
 def GetUnavailableSeasons(seasons,avSeasons):
 	if not seasons:
@@ -50,15 +51,40 @@ def GetProcAndDiff(req,av):
 					proc[i][j]=av[i][j]
 	return (proc,notAv)
 
+def GetDownloadLink(link):
+	data=GetSerialPage(link)
+	number=ParseEpisodeMagicNumber(data)
+	jsonLink='http://video.namba.kg/json/?action=video&id='+number
+	data=GetSerialPage(jsonLink)
+	jsonDict=json.loads(data)
+	return jsonDict['video']['download']['flv']
+
+def DownloadAndSaveFile(filename, link):	
+	chunksize=int(GetSetting('chunksize'))
+	f=open(filename,'wb')
+	filesize=GetFileSize(link)
+	cursize=0
+	chunks=GetBinaryDataChunk(link,chunksize)
+	
+	for data in chunks:
+		cursize+=len(data)
+		percent=cursize*100.0/filesize
+		sys.stdout.write("%s (%0.2f%%)\r" % (filename, percent))
+		f.write(data)
+	print
+	f.close()
+
+
 def main():
 	argv=sys.argv[1:]
 
 	
 	link=GetLinkFromArgv(argv)
 	pageData=GetSerialPage(link)
-	seasons=sorted(GetUniqueList(GetSeasonsFromArgv(argv)))
-	episodes=sorted(GetUniqueList(GetEpisodesFromArgv(argv)))
+	seasons=GetUniqueList(GetSeasonsFromArgv(argv))
+	episodes=GetUniqueList(GetEpisodesFromArgv(argv))
 	av=ParseAvailableSeasonsAndEpisodes(pageData)
+	serialName=ParseSerialName(pageData)
 	req=GetRequested(seasons,episodes)
 	
 	(proc,notAv)=GetProcAndDiff(req,av)
@@ -75,13 +101,19 @@ def main():
 		answer=raw_input()
 		if answer!='y':
 			exit()
-		else:
-			temp={}
-			for i in seasons:
-				if i in av.keys():						
-					temp[i]=av[i]
-			seasons=temp
 
+	procSeasons=sorted(proc.keys())
+	CreateSerialDirectories(os.curdir,serialName,procSeasons)
+	
+	for season in procSeasons:
+		procEpisodes=sorted(proc[season].keys())
+		for episode in procEpisodes:
+			episodeLink=proc[season][episode]
+			downloadData=GetDownloadLink(episodeLink)
+			filename='%s s%s.e%s.flv'%(serialName,season,episode)
+			filename=os.path.normpath(os.curdir+'/'+serialName+'/'+season+'/'+filename)
+			DownloadAndSaveFile(filename,downloadData)
+			
 	print 'Finish!'
 
 

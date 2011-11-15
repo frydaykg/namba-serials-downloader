@@ -10,4 +10,17 @@
 		<div class="thumb">[\s]+?<a href="(.+?)">[\S\W]+?<div class="grey">([\d]+?) серия</div>
 		]]>
 	</episodePattern>
+	<episodeMagicNumberPattern>
+		<![CDATA[
+		 {component: 'video', componentId: ([\d]+?)}
+		]]>
+	</episodeMagicNumberPattern>
+	<serialNamePattern>
+		<![CDATA[
+		 <h2>(.+?)</h2>[\S\W]+?<div class="serial-description">
+		]]>
+	</serialNamePattern>
+	<chunksize>
+		1024
+	</chunksize>
 </settings>

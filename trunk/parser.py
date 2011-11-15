@@ -23,6 +23,16 @@ def ParseAvailableSeasonsAndEpisodes(data):
 			
 	return result
 
+def ParseEpisodeMagicNumber(data):
+	pattern=GetSetting('episodeMagicNumberPattern')
+	r=re.search(pattern,data)
+	return r.groups(1)[0]
+
+def ParseSerialName(data):
+	pattern=GetSetting('serialNamePattern')
+	r=re.search(pattern,data)
+	return r.groups(1)[0]
+
 """
 Parse application arguments
 ------------------------------------------------------------------------

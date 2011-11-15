@@ -1,4 +1,5 @@
 from  xml.dom.minidom import *
+import os
 
 def GetSetting(name):
 	doc=parse('settings.xml')	
@@ -12,3 +13,12 @@ def GetUniqueList(L):
 		if i not in found:
 			found.add(i)
 	return list(found)
+
+def CreateSerialDirectories(savePath,name,seasons):
+	root=os.path.normpath(savePath+'/'+name)
+	if not os.path.exists(root):
+		os.makedirs(root)
+	for i in seasons:
+		p=os.path.normpath(root+'/'+i)
+		if not os.path.exists(p):
+			os.makedirs(p)
