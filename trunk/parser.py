@@ -1,4 +1,5 @@
 import re
+import os
 from common import *
 
 def ParseAvailableSeasonsAndEpisodes(data):	
@@ -68,3 +69,11 @@ def GetEpisodesFromArgv(argv):
 				episodes.append(argv[episodeIndex+1])
 				episodeIndex+=1
 	return episodes
+
+def GetDirectoryFromArgv(argv):
+	direct=os.curdir
+	if '-d' in argv:
+		dIndex=argv.index('-d')
+		if dIndex>=0 and dIndex<len(argv)-1:
+			direct=argv[dIndex+1]
+	return direct
