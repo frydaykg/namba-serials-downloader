@@ -1,4 +1,5 @@
 #summary How to use it
+#labels howto,usefull,keys,arguments
 = How to use it =
 
 Make sure that you have installed python interpreter.
@@ -19,9 +20,12 @@ python main.py -l http://serials.namba.kg/serial.php?id=70
 python main.py -l http://serials.namba.kg/serial.php?id=70 -s 1 2
 }}}
 
-
-
 *Download first, second and third episodes of first season of [http://serials.namba.kg/serial.php?id=70 How I met your mother] to Как я встретил вашу маму/1/*
 {{{
 python main.py -l http://serials.namba.kg/serial.php?id=70 -s 1 -e 1 2 3
+}}}
+
+*Download first season of [http://serials.namba.kg/serial.php?id=70 How I met your mother] to /home/username/serials/Как я встретил вашу маму/1/*
+{{{
+python main.py -l http://serials.namba.kg/serial.php?id=70 -s 1 -d /home/username/serials/
 }}}
