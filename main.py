@@ -60,7 +60,8 @@ def GetDownloadLink(link):
 	return jsonDict['video']['download']['flv']
 
 def DownloadAndSaveFile(filename, link):	
-	chunksize=int(GetSetting('chunksize'))
+	chunksize=int(
+	GetSetting('chunksize'))
 	f=open(filename,'wb')
 	filesize=GetFileSize(link)
 	cursize=0
@@ -86,6 +87,7 @@ def main():
 	av=ParseAvailableSeasonsAndEpisodes(pageData)
 	serialName=ParseSerialName(pageData)
 	req=GetRequested(seasons,episodes)
+	direct=GetDirectoryFromArgv(argv)
 	
 	(proc,notAv)=GetProcAndDiff(req,av)
 	
@@ -103,7 +105,7 @@ def main():
 			exit()
 
 	procSeasons=sorted(proc.keys())
-	CreateSerialDirectories(os.curdir,serialName,procSeasons)
+	CreateSerialDirectories(direct,serialName,procSeasons)
 	
 	for season in procSeasons:
 		procEpisodes=sorted(proc[season].keys())
@@ -111,7 +113,7 @@ def main():
 			episodeLink=proc[season][episode]
 			downloadData=GetDownloadLink(episodeLink)
 			filename='%s s%s.e%s.flv'%(serialName,season,episode)
-			filename=os.path.normpath(os.curdir+'/'+serialName+'/'+season+'/'+filename)
+			filename=os.path.normpath(direct+'/'+serialName+'/'+season+'/'+filename)
 			DownloadAndSaveFile(filename,downloadData)
 			
 	print 'Finish!'
