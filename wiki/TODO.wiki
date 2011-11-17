@@ -6,12 +6,15 @@
 {{{
 namba-serials-downloader -l http://serials.namba.kg/serial.php?id=70
 }}}
-
  * refactor code. Add try...extend constructions.
- * add --directory argument which show whuch directory use to save episodes
  * add ability to automatic video converting with ffmpeg
+ * add deb-packages to downloads
 
 
 
 = Wiki =
  * add notes about new abilities
+
+
+= Done =
+ * add -d argument which show whuch directory use to save episodes
